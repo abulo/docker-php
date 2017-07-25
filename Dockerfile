@@ -27,7 +27,9 @@ RUN cd /opt/soft && git clone https://github.com/rvoicilas/inotify-tools.git && 
 RUN cd /opt/soft && wget -c http://php.net/distributions/php-7.1.7.tar.gz && groupadd www && useradd -g www www
 
 #编译 php
-RUN cd /opt/soft && tar -zxf php-7.1.7.tar.gz &&  cd php-7.1.7 && ./buildconf --force && ./configure --prefix=/usr/local/php --with-config-file-path=/usr/local/php/etc --enable-bcmath --enable-calendar  --enable-exif --enable-ftp --enable-gd-native-ttf --enable-intl --enable-mbregex --enable-mbstring --enable-shmop --enable-soap --enable-sockets --enable-sysvmsg --enable-sysvsem --enable-sysvshm --enable-wddx --enable-dba --enable-zip --with-freetype-dir --with-gd --with-gettext --with-iconv --with-icu-dir=/usr --with-jpeg-dir --with-kerberos --with-libedit --with-mhash --with-openssl  --with-png-dir --with-xmlrpc --with-zlib --with-zlib-dir --with-bz2 --enable-fpm --with-fpm-user=www --with-fpm-group=www --with-gmp --with-curl --with-xsl --with-ldap --with-ldap-sasl=/usr --enable-pcntl --with-tidy --enable-zend-signals --enable-dtrace  --with-mysqli=mysqlnd   --with-pdo-mysql=mysqlnd  --enable-pdo  --enable-opcache --with-mcrypt --enable-maintainer-zts --enable-gd-jis-conv --with-imap --with-imap-ssl --with-libxml-dir --enable-shared --with-pcre-regex  --with-sqlite3 --with-cdb  --enable-fileinfo --enable-filter --with-pcre-dir  --with-openssl-dir  --enable-json  --enable-mbregex-backtrack  --with-onig  --with-pdo-sqlite --with-readline --enable-session --enable-simplexml   --enable-mysqlnd-compression-support --with-pear && sed -i 's/EXTRA_LIBS.*/& -llber/g' Makefile && make && make install
+RUN cd /opt/soft && tar -zxf php-7.1.7.tar.gz &&  cd php-7.1.7 && ./buildconf --force && ./configure --prefix=/usr/local/php --with-config-file-path=/usr/local/php/etc --enable-bcmath --enable-calendar  --enable-exif --enable-ftp --enable-gd-native-ttf --enable-intl --enable-mbregex --enable-mbstring --enable-shmop --enable-soap --enable-sockets --enable-sysvmsg --enable-sysvsem --enable-sysvshm --enable-wddx --enable-dba --enable-zip --with-freetype-dir --with-gd --with-gettext --with-iconv --with-icu-dir=/usr --with-jpeg-dir --with-kerberos --with-libedit --with-mhash --with-openssl  --with-png-dir --with-xmlrpc --with-zlib --with-zlib-dir --with-bz2 --enable-fpm --with-fpm-user=www --with-fpm-group=www --with-gmp --with-curl --with-xsl --with-ldap --with-ldap-sasl=/usr --enable-pcntl --with-tidy --enable-zend-signals --enable-dtrace  --with-mysqli=mysqlnd   --with-pdo-mysql=mysqlnd  --enable-pdo  --enable-opcache --with-mcrypt --enable-gd-jis-conv --with-imap --with-imap-ssl --with-libxml-dir --enable-shared --with-pcre-regex  --with-sqlite3 --with-cdb  --enable-fileinfo --enable-filter --with-pcre-dir  --with-openssl-dir  --enable-json  --enable-mbregex-backtrack  --with-onig  --with-pdo-sqlite --with-readline --enable-session --enable-simplexml   --enable-mysqlnd-compression-support --with-pear && sed -i 's/EXTRA_LIBS.*/& -llber/g' Makefile && make && make install
+
+#--enable-maintainer-zts
 
 #编译 redis 插件
 RUN cd /opt/soft && wget -c http://pecl.php.net/get/redis-3.1.3.tgz && tar -zxf redis-3.1.3.tgz && cd redis-3.1.3 && /usr/local/php/bin/phpize && ./configure --with-php-config=/usr/local/php/bin/php-config && make && make install
@@ -54,22 +56,25 @@ RUN cd /opt/soft && wget http://pecl.php.net/get/inotify-2.0.0.tgz  && tar zxvf 
 RUN cd /opt/soft && wget -c https://pecl.php.net/get/mongodb-1.2.9.tgz && tar zxvf mongodb-1.2.9.tgz && cd mongodb-1.2.9 && /usr/local/php/bin/phpize && ./configure  --with-php-config=/usr/local/php/bin/php-config  && make && make install
 
 #安装opencv2.0
-RUN cd /opt/soft && wget https://github.com/opencv/opencv/archive/2.4.9.tar.gz && tar xvf 2.4.9.tar.gz && cd opencv-2.4.9/ && cmake CMakeLists.txt && make -j $(cat /proc/cpuinfo|grep processor|wc -l) && make install
+RUN cd /opt/soft && wget https://github.com/opencv/opencv/archive/2.4.4.tar.gz && tar xvf 2.4.4.tar.gz && cd opencv-2.4.4/ && cmake CMakeLists.txt && make -j $(cat /proc/cpuinfo|grep processor|wc -l) && make install && export PKG_CONFIG_PATH=/usr/lib/pkgconfig/:/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH && echo "/usr/local/lib/" > /etc/ld.so.conf.d/opencv.conf  && ldconfig
 
 #安装php-tclip扩展
-RUN cd /opt/soft && git clone https://github.com/exinnet/tclip.git && cd tclip/php_ext && /usr/local/php/bin/phpize && ./configure  --with-php-config=/usr/local/php/bin/php-config  && make && make install && cp modules/tclip.so /usr/local/php/lib/php/extensions/no-debug-zts-20160303/
+#RUN cd /opt/soft && git clone https://github.com/exinnet/tclip.git && cd tclip/php_ext && /usr/local/php/bin/phpize && ./configure  --with-php-config=/usr/local/php/bin/php-config  && make && make install && cp modules/tclip.so /usr/local/php/lib/php/extensions/no-debug-non-zts-20160303/
+
+RUN cd /opt/soft && git clone https://github.com/jonnywang/tclip.git && cd tclip/php_ext && /usr/local/php/bin/phpize && ./configure  --with-php-config=/usr/local/php/bin/php-config  && make && make install
+# && cp modules/tclip.so /usr/local/php/lib/php/extensions/no-debug-non-zts-20160303/
 
 #编译pthreads
-RUN cd /opt/soft && git clone https://github.com/krakjoe/pthreads.git && cd pthreads && git checkout 0431334ab0472dccbb8fdb2ae8d4885490d6f65a && /usr/local/php/bin/phpize && ./configure --with-php-config=/usr/local/php/bin/php-config --enable-pthreads --with-pthreads-sanitize --with-pthreads-dmalloc  --with-php-config=/usr/local/php/bin/php-config && make && make install
+#RUN cd /opt/soft && git clone https://github.com/krakjoe/pthreads.git && cd pthreads && git checkout 0431334ab0472dccbb8fdb2ae8d4885490d6f65a && /usr/local/php/bin/phpize && ./configure --with-php-config=/usr/local/php/bin/php-config --enable-pthreads --with-pthreads-sanitize --with-pthreads-dmalloc  --with-php-config=/usr/local/php/bin/php-config && make && make install
 
 #编译swoole
-RUN cd /opt/soft && wget -c  https://github.com/swoole/swoole-src/archive/v2.0.7.tar.gz && tar -zxf v2.0.7.tar.gz  && cd swoole-src-2.0.7  && /usr/local/php/bin/phpize && ./configure --enable-swoole-debug --enable-sockets --enable-openssl --with-openssl-dir=/usr/local/openssl --enable-http2 --enable-async-redis --enable-swoole  --enable-coroutine --enable-timewheel --enable-mysqlnd --enable-thread --with-php-config=/usr/local/php/bin/php-config  && make && make install
-
+RUN cd /opt/soft && wget -c  https://github.com/swoole/swoole-src/archive/v2.0.7.tar.gz && tar -zxf v2.0.7.tar.gz  && cd swoole-src-2.0.7  && /usr/local/php/bin/phpize && ./configure --enable-swoole-debug --enable-sockets --enable-openssl --with-openssl-dir=/usr/local/openssl --enable-http2 --enable-async-redis --enable-swoole  --enable-coroutine --enable-timewheel --enable-mysqlnd  --with-php-config=/usr/local/php/bin/php-config  && make && make install
+#--enable-thread
 #copy 配置文件
 COPY php-fpm.conf  /usr/local/php/etc/
 COPY www.conf  /usr/local/php/etc/php-fpm.d/
 COPY php.ini  /usr/local/php/etc/
-COPY php-cli.ini  /usr/local/php/etc/
+#COPY php-cli.ini  /usr/local/php/etc/
 
 RUN cp /opt/soft/php-7.1.7/sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm && chmod +x /etc/init.d/php-fpm &&   apt-get clean  && rm -rf /opt/soft/*
 
