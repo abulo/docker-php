@@ -76,10 +76,10 @@ COPY www.conf  /usr/local/php/etc/php-fpm.d/
 COPY php.ini  /usr/local/php/etc/
 #COPY php-cli.ini  /usr/local/php/etc/
 
-RUN cp /opt/soft/php-7.1.7/sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm && chmod +x /etc/init.d/php-fpm &&   apt-get clean  && rm -rf /opt/soft/*
+RUN cp /opt/soft/php-7.1.7/sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm && chmod +x /etc/init.d/php-fpm &&   apt-get clean
 
-EXPOSE 9000
-CMD /usr/local/php/sbin/php-fpm  --nodaemonize --fpm-config /usr/local/php/etc/php-fpm.conf
+#EXPOSE 9000
+#CMD /usr/local/php/sbin/php-fpm  --nodaemonize --fpm-config /usr/local/php/etc/php-fpm.conf
 #docker network create --driver=bridge --subnet=192.168.0.0/24 --gateway=192.168.0.1 mynet
 #docker run --ip=192.168.0.10 --net=mynet -ti some_image
 #docker run -it -d --name pushmedia  abulo/lnmp
