@@ -6,8 +6,7 @@ FROM ubuntu:14.04
 MAINTAINER abulo.hoo@gmail.com
 
 RUN groupadd -r abulo && useradd -r -g abulo abulo && mkdir -pv /home/abulo
-USER abulo
-WORKDIR /home/abulo
+
 
 # 设置源
 RUN  sed -i 's/archive.ubuntu.com/mirrors.aliyun.com/' /etc/apt/sources.list
@@ -72,6 +71,9 @@ COPY php.ini  /usr/local/php/etc/
 #COPY php-cli.ini  /usr/local/php/etc/
 
 RUN cp /opt/soft/php-7.1.7/sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm && chmod +x /etc/init.d/php-fpm &&   apt-get clean
+
+USER abulo
+WORKDIR /home/abulo
 
 #EXPOSE 9000
 #CMD /usr/local/php/sbin/php-fpm  --nodaemonize --fpm-config /usr/local/php/etc/php-fpm.conf
