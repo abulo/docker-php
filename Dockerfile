@@ -62,7 +62,7 @@ RUN cd /opt/soft && git clone https://github.com/jonnywang/tclip.git && cd tclip
 #RUN cd /opt/soft && git clone https://github.com/krakjoe/pthreads.git && cd pthreads && git checkout 0431334ab0472dccbb8fdb2ae8d4885490d6f65a && /usr/local/php/bin/phpize && ./configure --with-php-config=/usr/local/php/bin/php-config --enable-pthreads --with-pthreads-sanitize --with-pthreads-dmalloc  --with-php-config=/usr/local/php/bin/php-config && make && make install
 
 #编译swoole
-RUN cd /opt/soft && wget -c  https://github.com/swoole/swoole-src/archive/v2.0.7.tar.gz && tar -zxf v2.0.7.tar.gz  && cd swoole-src-2.0.7  && /usr/local/php/bin/phpize && ./configure --enable-swoole-debug --enable-sockets --enable-openssl --with-openssl-dir=/usr/local/openssl --enable-http2 --enable-async-redis --enable-swoole  --enable-coroutine --enable-timewheel --enable-mysqlnd  --with-php-config=/usr/local/php/bin/php-config  && make && make install
+RUN cd /opt/soft && wget -c  https://github.com/swoole/swoole-src/archive/v2.0.8.tar.gz && tar -zxf v2.0.8.tar.gz  && cd swoole-src-2.0.8  && /usr/local/php/bin/phpize && ./configure --enable-swoole-debug --enable-sockets --enable-openssl --with-openssl-dir=/usr/local/openssl --enable-http2 --enable-async-redis --enable-swoole  --enable-coroutine --enable-timewheel --enable-mysqlnd  --with-php-config=/usr/local/php/bin/php-config  && make && make install
 #--enable-thread
 #copy 配置文件
 COPY php-fpm.conf  /usr/local/php/etc/
