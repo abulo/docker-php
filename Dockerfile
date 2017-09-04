@@ -5,7 +5,8 @@ FROM ubuntu:14.04
 # 维护者信息
 MAINTAINER abulo.hoo@gmail.com
 
-RUN groupadd -r www && useradd -r -g www www && mkdir -pv /home/www
+RUN groupadd -r abulo && useradd -r -g abulo abulo && mkdir -pv /home/abulo
+
 
 # 设置源
 #RUN  sed -i 's/archive.ubuntu.com/mirrors.aliyun.com/' /etc/apt/sources.list
@@ -24,14 +25,8 @@ RUN cd /opt/soft && git clone https://github.com/redis/hiredis && cd hiredis && 
 #编译 inotify-tools
 RUN cd /opt/soft && git clone https://github.com/rvoicilas/inotify-tools.git && cd inotify-tools && ./autogen.sh && ./configure && make && make install && ln -sv /usr/local/lib/libinotify* /usr/lib/
 
-#编译nghttp2
-RUN cd /opt/soft && git clone https://github.com/nghttp2/nghttp2.git && cd nghttp2 && git submodule update --init && autoreconf -i && automake && automake && ./configure && make && make install
-
-#安装opencv2.0
-RUN cd /opt/soft && wget https://github.com/opencv/opencv/archive/2.4.4.tar.gz && tar xvf 2.4.4.tar.gz && cd opencv-2.4.4/ && cmake CMakeLists.txt && make -j $(cat /proc/cpuinfo|grep processor|wc -l) && make install && export PKG_CONFIG_PATH=/usr/lib/pkgconfig/:/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH && echo "/usr/local/lib/" > /etc/ld.so.conf.d/opencv.conf  && ldconfig
-
 # 编译 PHP
-RUN cd /opt/soft && wget -c http://php.net/distributions/php-7.1.7.tar.gz && tar -zxf php-7.1.7.tar.gz &&  cd php-7.1.7 && ./buildconf --force && ./configure --prefix=/usr/local/php --with-config-file-path=/usr/local/php/etc --with-config-file-scan-dir=/usr/local/php/etc/php.d --enable-bcmath --enable-calendar  --enable-exif --enable-ftp --enable-gd-native-ttf --enable-intl --enable-mbregex --enable-mbstring --enable-shmop --enable-soap --enable-sockets --enable-sysvmsg --enable-sysvsem --enable-sysvshm --enable-wddx --enable-dba --enable-zip --with-freetype-dir --with-gd --with-gettext --with-iconv --with-icu-dir=/usr --with-jpeg-dir --with-kerberos --with-libedit --with-mhash --with-openssl  --with-png-dir --with-xmlrpc --with-zlib --with-zlib-dir --with-bz2 --enable-fpm --with-fpm-user=www --with-fpm-group=www --with-gmp --with-curl --with-xsl --with-ldap --with-ldap-sasl=/usr --enable-pcntl --with-tidy --enable-zend-signals --enable-dtrace  --with-mysqli=mysqlnd   --with-pdo-mysql=mysqlnd  --enable-pdo  --enable-opcache --with-mcrypt --enable-gd-jis-conv --with-imap --with-imap-ssl --with-libxml-dir --enable-shared --with-pcre-regex  --with-sqlite3 --with-cdb  --enable-fileinfo --enable-filter --with-pcre-dir  --with-openssl-dir  --enable-json  --enable-mbregex-backtrack  --with-onig  --with-pdo-sqlite --with-readline --enable-session --enable-simplexml   --enable-mysqlnd-compression-support --with-pear && sed -i 's/EXTRA_LIBS.*/& -llber/g' Makefile && make && make install
+RUN cd /opt/soft && wget -c http://php.net/distributions/php-7.1.7.tar.gz && tar -zxf php-7.1.7.tar.gz &&  cd php-7.1.7 && ./buildconf --force && ./configure --prefix=/usr/local/php --with-config-file-path=/usr/local/php/etc --enable-bcmath --enable-calendar  --enable-exif --enable-ftp --enable-gd-native-ttf --enable-intl --enable-mbregex --enable-mbstring --enable-shmop --enable-soap --enable-sockets --enable-sysvmsg --enable-sysvsem --enable-sysvshm --enable-wddx --enable-dba --enable-zip --with-freetype-dir --with-gd --with-gettext --with-iconv --with-icu-dir=/usr --with-jpeg-dir --with-kerberos --with-libedit --with-mhash --with-openssl  --with-png-dir --with-xmlrpc --with-zlib --with-zlib-dir --with-bz2 --enable-fpm --with-fpm-user=abulo --with-fpm-group=abulo --with-gmp --with-curl --with-xsl --with-ldap --with-ldap-sasl=/usr --enable-pcntl --with-tidy --enable-zend-signals --enable-dtrace  --with-mysqli=mysqlnd   --with-pdo-mysql=mysqlnd  --enable-pdo  --enable-opcache --with-mcrypt --enable-gd-jis-conv --with-imap --with-imap-ssl --with-libxml-dir --enable-shared --with-pcre-regex  --with-sqlite3 --with-cdb  --enable-fileinfo --enable-filter --with-pcre-dir  --with-openssl-dir  --enable-json  --enable-mbregex-backtrack  --with-onig  --with-pdo-sqlite --with-readline --enable-session --enable-simplexml   --enable-mysqlnd-compression-support --with-pear && sed -i 's/EXTRA_LIBS.*/& -llber/g' Makefile && make && make install
 
 #--enable-maintainer-zts
 
@@ -41,6 +36,8 @@ RUN cd /opt/soft && wget -c http://pecl.php.net/get/redis-3.1.3.tgz && tar -zxf 
 #编译 event 插件
 RUN cd /opt/soft && wget -c http://pecl.php.net/get/event-2.3.0.tgz && tar -zxf event-2.3.0.tgz && cd event-2.3.0 && /usr/local/php/bin/phpize && ./configure --with-php-config=/usr/local/php/bin/php-config --with-event-core --with-event-extra && make && make install
 
+#编译nghttp2
+RUN cd /opt/soft && git clone https://github.com/nghttp2/nghttp2.git && cd nghttp2 && git submodule update --init && autoreconf -i && automake && automake && ./configure && make && make install
 
 #编译yaml
 RUN cd /opt/soft && wget http://pecl.php.net/get/yaml-2.0.0.tgz && tar zxvf yaml-2.0.0.tgz && cd yaml-2.0.0 && /usr/local/php/bin/phpize && ./configure  --with-php-config=/usr/local/php/bin/php-config  && make && make install
@@ -53,6 +50,9 @@ RUN cd /opt/soft && wget http://pecl.php.net/get/inotify-2.0.0.tgz  && tar zxvf 
 
 #编译mongodb
 RUN cd /opt/soft && wget -c https://pecl.php.net/get/mongodb-1.2.9.tgz && tar zxvf mongodb-1.2.9.tgz && cd mongodb-1.2.9 && /usr/local/php/bin/phpize && ./configure  --with-php-config=/usr/local/php/bin/php-config  && make && make install
+
+#安装opencv2.0
+RUN cd /opt/soft && wget https://github.com/opencv/opencv/archive/2.4.4.tar.gz && tar xvf 2.4.4.tar.gz && cd opencv-2.4.4/ && cmake CMakeLists.txt && make -j $(cat /proc/cpuinfo|grep processor|wc -l) && make install && export PKG_CONFIG_PATH=/usr/lib/pkgconfig/:/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH && echo "/usr/local/lib/" > /etc/ld.so.conf.d/opencv.conf  && ldconfig
 
 
 RUN cd /opt/soft && git clone https://github.com/jonnywang/tclip.git && cd tclip/php_ext && /usr/local/php/bin/phpize && ./configure  --with-php-config=/usr/local/php/bin/php-config  && make && make install
@@ -72,8 +72,8 @@ COPY php.ini  /usr/local/php/etc/
 
 RUN cp /opt/soft/php-7.1.7/sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm && chmod +x /etc/init.d/php-fpm &&   apt-get clean
 
-USER www
-WORKDIR /home/www
+USER abulo
+WORKDIR /home/abulo
 
 #EXPOSE 9000
 #CMD /usr/local/php/sbin/php-fpm  --nodaemonize --fpm-config /usr/local/php/etc/php-fpm.conf
