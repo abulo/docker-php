@@ -66,7 +66,7 @@ RUN cd /opt/soft && wget -c  https://github.com/swoole/swoole-src/archive/v2.0.7
 #--enable-thread
 
 
-RUN cd /opt/soft && wget -c https://github.com/swoole/php-cp/archive/1.5.0.tar.gz && tar -zxf  php-cp-1.5.0.tar.gz &&  cd php-cp-1.5.0 && /usr/local/php/bin/phpize &&  ./configure  --with-php-config=/usr/local/php/bin/php-config  && make && make install 
+RUN cd /opt/soft && wget -c https://github.com/swoole/php-cp/archive/1.5.0.tar.gz && tar -zxf  1.5.0.tar.gz &&  cd php-cp-1.5.0 && /usr/local/php/bin/phpize &&  ./configure  --with-php-config=/usr/local/php/bin/php-config  && make && make install
 
 
 #copy 配置文件
