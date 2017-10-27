@@ -32,7 +32,7 @@ RUN cd /opt/soft && wget https://github.com/opencv/opencv/archive/2.4.4.tar.gz &
 
 #编译jemalloc
 RUN cd /opt/soft && wget https://github.com/jemalloc/jemalloc/releases/download/4.0.4/jemalloc-4.0.4.tar.bz2 &&  tar -zxf jemalloc-4.0.4.tar.bz2 && cd jemalloc-4.0.4/ &&
-./configure --with-jemalloc-prefix=je_ --prefix=/usr/local/jemalloc && make -j 4 && make install;
+./configure --with-jemalloc-prefix=je_ --prefix=/usr/local/jemalloc && make -j 4 && make install
 
 
 # 编译 PHP
