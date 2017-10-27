@@ -40,7 +40,7 @@ RUN cd /opt/soft && wget -c http://php.net/distributions/php-7.1.11.tar.gz && ta
 RUN cd /opt/soft && wget -c http://pecl.php.net/get/redis-3.1.3.tgz && tar -zxf redis-3.1.3.tgz && cd redis-3.1.3 && /usr/local/php/bin/phpize && ./configure --with-php-config=/usr/local/php/bin/php-config && make && make install
 
 #编译 event 插件
-RUN cd /opt/soft && wget -c http://pecl.php.net/get/event-2.3.0.tgz && tar -zxf event-2.3.0.tgz && cd event-2.3.0 && /usr/local/php/bin/phpize && ./configure --with-php-config=/usr/local/php/bin/php-config --with-event-core --with-event-extra && make && make install
+RUN cd /opt/soft && wget -c http://pecl.php.net/get/event-2.3.0.tgz && tar -zxf event-2.3.0.tgz && cd event-2.3.0 && /usr/local/php/bin/phpize && ./configure   --with-php-config=/usr/local/php/bin/php-config --with-event-core --with-event-extra && make && make install
 
 #编译yaml
 RUN cd /opt/soft && wget http://pecl.php.net/get/yaml-2.0.0.tgz && tar -zxf yaml-2.0.0.tgz && cd yaml-2.0.0 && /usr/local/php/bin/phpize && ./configure  --with-php-config=/usr/local/php/bin/php-config  && make && make install
@@ -58,13 +58,13 @@ RUN cd /opt/soft && wget -c https://pecl.php.net/get/mongodb-1.2.9.tgz && tar -z
 RUN cd /opt/soft && git clone https://github.com/abulo/tclip.git --depth=1 && cd tclip/php_ext && /usr/local/php/bin/phpize && ./configure  --with-php-config=/usr/local/php/bin/php-config  && make && make install
 
 #敏感词过滤
-RUN cd /opt/soft && wget ftp://linux.thai.net/pub/ThaiLinux/software/libthai/libdatrie-0.2.5.tar.gz && tar -zxf libdatrie-0.2.5.tar.gz && libdatrie-0.2.5 && ./configure --prefix=/usr/local/libdatrie && make && make install
+RUN cd /opt/soft && wget ftp://linux.thai.net/pub/ThaiLinux/software/libthai/libdatrie-0.2.5.tar.gz && tar -zxf libdatrie-0.2.5.tar.gz && libdatrie-0.2.5 && ./configure  --prefix=/usr/local/libdatrie && make && make install
 
 #敏感词过滤PHP 扩展
-RUN cd /opt/soft && git clone https://github.com/abulo/php-ext-trie-filter.git --depth=1 && cd php-ext-trie-filter && git ckeckout php7 &&  /usr/local/php/bin/phpize && ./configure  --with-php-config=/usr/local/php/bin/php-config  --with-trie_filter=/usr/local/libdatrie && make && make install
+RUN cd /opt/soft && git clone https://github.com/abulo/php-ext-trie-filter.git --depth=1 && cd php-ext-trie-filter && git ckeckout php7 &&  /usr/local/php/bin/phpize &&  ./configure   --with-php-config=/usr/local/php/bin/php-config  --with-trie_filter=/usr/local/libdatrie && make && make install
 
 #编译swoole
-RUN cd /opt/soft && wget -c  https://github.com/swoole/swoole-src/archive/v1.9.21.tar.gz && tar -zxf v1.9.21.tar.gz  && cd swoole-src-1.9.21  && /usr/local/php/bin/phpize && ./configure --enable-swoole-debug --enable-sockets --enable-openssl --with-openssl-dir=/usr/local/openssl --enable-http2 --enable-async-redis --enable-swoole  --enable-coroutine --enable-timewheel --enable-mysqlnd --with-jemalloc-dir=/usr/local/jemalloc  --with-php-config=/usr/local/php/bin/php-config  && make && make install
+RUN cd /opt/soft && wget -c  https://github.com/swoole/swoole-src/archive/v1.9.21.tar.gz && tar -zxf v1.9.21.tar.gz  && cd swoole-src-1.9.21  && /usr/local/php/bin/phpize && ./configure       --enable-swoole-debug --enable-sockets --enable-openssl --with-openssl-dir=/usr/local/openssl --enable-http2 --enable-async-redis --enable-swoole  --enable-coroutine --enable-timewheel --enable-mysqlnd --with-jemalloc-dir=/usr/local/jemalloc  --with-php-config=/usr/local/php/bin/php-config  && make && make install
 
 #编译数据库连接池
 RUN cd /opt/soft && wget -c https://github.com/swoole/php-cp/archive/1.5.0.tar.gz && tar -zxf  1.5.0.tar.gz &&  cd php-cp-1.5.0 && /usr/local/php/bin/phpize &&  ./configure  --with-php-config=/usr/local/php/bin/php-config  && make && make install
