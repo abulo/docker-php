@@ -58,7 +58,7 @@ RUN cd /opt/soft && wget -c https://pecl.php.net/get/mongodb-1.2.9.tgz && tar -z
 RUN cd /opt/soft && git clone https://github.com/abulo/tclip.git --depth=1 && cd tclip/php_ext && /usr/local/php/bin/phpize && ./configure  --with-php-config=/usr/local/php/bin/php-config  && make && make install
 
 #敏感词过滤
-RUN cd /opt/sof && wget ftp://linux.thai.net/pub/ThaiLinux/software/libthai/libdatrie-0.2.5.tar.gz && tar -zxf libdatrie-0.2.5.tar.gz && libdatrie-0.2.5 && ./configure --prefix=/usr/local/libdatrie && make && make install
+RUN cd /opt/soft && wget ftp://linux.thai.net/pub/ThaiLinux/software/libthai/libdatrie-0.2.5.tar.gz && tar -zxf libdatrie-0.2.5.tar.gz && libdatrie-0.2.5 && ./configure --prefix=/usr/local/libdatrie && make && make install
 
 #敏感词过滤PHP 扩展
 RUN cd /opt/soft && git clone https://github.com/abulo/php-ext-trie-filter.git --depth=1 && cd php-ext-trie-filter && git ckeckout php7 &&  /usr/local/php/bin/phpize && ./configure  --with-php-config=/usr/local/php/bin/php-config  --with-trie_filter=/usr/local/libdatrie && make && make install
