@@ -37,7 +37,7 @@ RUN mkdir -pv /opt/soft && cd /opt/soft && wget -c http://php.net/distributions/
 
 
 #编译 PHP-X
-RUN mkdir -pv /opt/soft && cd /opt/soft && git clone https://github.com/swoole/PHP-X.git && cd PHP-X && cmake . -DPHP_CONFIG_DIR=/usr/local/php/bin && cmake . && make install && && rm -rf /opt/soft
+RUN mkdir -pv /opt/soft && cd /opt/soft && git clone https://github.com/swoole/PHP-X.git && cd PHP-X && cmake . -DPHP_CONFIG_DIR=/usr/local/php/bin && cmake . && make install &&  rm -rf /opt/soft
 
 #编译 redis 插件
 RUN mkdir -pv /opt/soft && cd /opt/soft && wget -c http://pecl.php.net/get/redis-3.1.6.tgz && tar -zxf redis-3.1.6.tgz && cd redis-3.1.6 && /usr/local/php/bin/phpize && ./configure --with-php-config=/usr/local/php/bin/php-config && make && make install && rm -rf /opt/soft
