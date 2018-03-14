@@ -78,7 +78,7 @@ RUN mkdir -pv /opt/soft && cd /opt/soft && git clone https://github.com/swoole/P
 
 
 #编译swoole
-RUN mkdir -pv /opt/soft && cd /opt/soft && wget -c  https://github.com/swoole/swoole-src/archive/v1.10.1.tar.gz && tar -zxf v1.10.1.tar.gz  && cd swoole-src-1.10.1 && sed -i '970c char *buf = (char*) sw_malloc(buf_len);' src/core/base.c  &&  sed -i '975c void *tmp = sw_realloc(buf, buf_len);' src/core/base.c  && /usr/local/php/bin/phpize && ./configure       --enable-swoole-debug --enable-sockets --enable-openssl --with-openssl-dir=/usr/local/openssl --enable-http2 --enable-async-redis --enable-swoole  --enable-coroutine --enable-timewheel --enable-mysqlnd --with-jemalloc-dir=/usr/local/jemalloc  --with-php-config=/usr/local/php/bin/php-config  && make && make install && rm -rf /opt/soft
+RUN mkdir -pv /opt/soft && cd /opt/soft && wget -c  https://github.com/swoole/swoole-src/archive/v1.10.2.tar.gz && tar -zxf v1.10.2.tar.gz  && cd swoole-src-1.10.2 &&  /usr/local/php/bin/phpize && ./configure       --enable-swoole-debug --enable-sockets --enable-openssl --with-openssl-dir=/usr/local/openssl --enable-http2 --enable-async-redis --enable-swoole  --enable-coroutine --enable-timewheel --enable-mysqlnd --with-jemalloc-dir=/usr/local/jemalloc  --with-php-config=/usr/local/php/bin/php-config  && make && make install && rm -rf /opt/soft
 
 #copy 配置文件
 COPY php-fpm.conf  /usr/local/php/etc/
