@@ -67,7 +67,7 @@ RUN mkdir -pv /opt/soft && cd /opt/soft && wget -c http://pecl.php.net/get/mongo
 #智能截图
 RUN mkdir -pv /opt/soft && cd /opt/soft && git clone https://github.com/abulo/tclip.git --depth=1 && cd tclip/php_ext && /usr/local/php/bin/phpize && ./configure  --with-php-config=/usr/local/php/bin/php-config  && make && make install && rm -rf /opt/soft
 
-RUN mkdir -pv /opt/soft && cd /opt/soft && https://github.com/george518/ppc_coreimgclip --depth=1 && cd ppc_coreimgclip/php_ext && /usr/local/php/bin/phpize && ./configure  --with-php-config=/usr/local/php/bin/php-config  && make && make install && rm -rf /opt/soft
+RUN mkdir -pv /opt/soft && cd /opt/soft && git clone https://github.com/george518/ppc_coreimgclip --depth=1 && cd ppc_coreimgclip/php_ext && /usr/local/php/bin/phpize && ./configure  --with-php-config=/usr/local/php/bin/php-config  && make && make install && rm -rf /opt/soft
 
 #敏感词过滤
 RUN mkdir -pv /opt/soft && cd /opt/soft && wget ftp://linux.thai.net/pub/ThaiLinux/software/libthai/libdatrie-0.2.5.tar.gz && tar -zxf libdatrie-0.2.5.tar.gz && cd  libdatrie-0.2.5 && ./configure  --prefix=/usr/local/libdatrie && make && make install && rm -rf /opt/soft
