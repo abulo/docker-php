@@ -75,10 +75,6 @@ RUN mkdir -pv /opt/soft && cd /opt/soft && wget https://github.com/abulo/php-ext
 #编译 PHP-X
 RUN mkdir -pv /opt/soft && cd /opt/soft && git clone https://github.com/swoole/PHP-X.git && cd PHP-X && cmake . -DPHP_CONFIG_DIR=/usr/local/php/bin && cmake . && make install &&  rm -rf /opt/soft
 
-
-#添加postgresql
-RUN apt-get -y update && apt-get install -y  libpq-dev  && apt-get clean && rm -rf /var/lib/apt/lists/*
-
 #编译swoole
 #RUN mkdir -pv /opt/soft && cd /opt/soft && wget -c  https://github.com/swoole/swoole-src/archive/v2.1.1.tar.gz && tar -zxf v2.1.1.tar.gz  && cd swoole-src-2.1.1  &&  sed -i '970c char *buf = (char*) sw_malloc(buf_len);' src/core/base.c  &&  sed -i '975c void *tmp = sw_realloc(buf, buf_len);' src/core/base.c &&  /usr/local/php/bin/phpize && ./configure       --enable-swoole-debug --enable-sockets --enable-openssl --with-openssl-dir=/usr/local/openssl --enable-http2 --enable-async-redis --enable-swoole  --enable-coroutine --enable-timewheel --enable-mysqlnd --with-jemalloc-dir=/usr/local/jemalloc  --with-php-config=/usr/local/php/bin/php-config  && make && make install && rm -rf /opt/soft
 
