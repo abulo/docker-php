@@ -106,7 +106,7 @@ RUN mkdir -pv /opt/soft ;\
 			-D BUILD_EXAMPLES=ON \
 			-D BUILD_NEW_PYTHON_SUPPORT=ON \
 			-D WITH_IPP=OFF \
-			-D WITH_V4L=ON ..  \
+			-D WITH_V4L=ON ..  ;\
 			make ;\
 			make install ;\
 			ldconfig ;\
