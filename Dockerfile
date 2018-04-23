@@ -14,21 +14,6 @@ RUN mkdir -pv /opt/soft && cd /opt/soft  && wget -nv https://cmake.org/files/v3.
 # 编译openssl
 RUN mkdir -pv /opt/soft && cd /opt/soft && wget -nv https://www.openssl.org/source/openssl-1.0.2l.tar.gz  && tar -zxf openssl-1.0.2l.tar.gz  && cd openssl-1.0.2l  &&  ./config shared --prefix=/usr/local/openssl --openssldir=/usr/lib/openssl   && make  && make install  && rm -rf /opt/soft
 
-# 编译hiredis
-RUN mkdir -pv /opt/soft && cd /opt/soft  && git clone https://github.com/redis/hiredis --depth=1  && cd hiredis  && make -j  && make install  && ldconfig  && mkdir -pv /usr/lib/hiredis  && cp libhiredis.so /usr/lib/hiredis  && mkdir -pv /usr/include/hiredis  && cp hiredis.h /usr/include/hiredis  && rm -rf /opt/soft
-
-#编译 inotify-tools
-RUN mkdir -pv /opt/soft && cd /opt/soft  && wget -nv https://github.com/rvoicilas/inotify-tools/archive/3.20.1.tar.gz  && tar -zxf 3.20.1.tar.gz  && cd inotify-tools-3.20.1  && ./autogen.sh  && ./configure  && make  && make install  && ln -sv /usr/local/lib/libinotify* /usr/lib/  && rm -rf /opt/soft
-
-#编译nghttp2
-RUN mkdir -pv /opt/soft && cd /opt/soft  && wget -nv https://github.com/nghttp2/nghttp2/releases/download/v1.31.0/nghttp2-1.31.0.tar.gz  && tar -zxf nghttp2-1.31.0.tar.gz  && cd nghttp2-1.31.0  && ./configure  && make  && make install  && rm -rf /opt/soft
-
-#编译jemalloc
-RUN mkdir -pv /opt/soft && cd /opt/soft && wget -nv https://github.com/jemalloc/jemalloc/releases/download/4.0.4/jemalloc-4.0.4.tar.bz2 && tar -jxf jemalloc-4.0.4.tar.bz2 && cd jemalloc-4.0.4/ && ./configure --with-jemalloc-prefix=je_ --prefix=/usr/local/jemalloc && make && make install && rm -rf /opt/soft
-
-#安装libsodium
-RUN mkdir -pv /opt/soft && cd /opt/soft && wget -nv https://github.com/jedisct1/libsodium/archive/1.0.16.tar.gz && tar -zxf 1.0.16.tar.gz && cd libsodium-1.0.16  && ./autogen.sh && ./configure && make && make check && make install  && rm -rf /opt/soft
-
 #python 插件
 RUN mkdir -pv /opt/soft && cd /opt/soft && wget -nv https://bootstrap.pypa.io/get-pip.py && python -mpip install -U pyopenssl ndg-httpsclient pyasn1 && python -mpip install --upgrade pip && python get-pip.py && python -mpip install -U numpy && python -mpip install -U matplotlib --ignore-installed six && rm -rf /opt/soft;
 
@@ -48,6 +33,21 @@ RUN mkdir -pv /opt/soft && wget -nv  https://github.com/opencv/opencv/archive/3.
 			-D WITH_IPP=OFF \
 			-D WITH_V4L=ON .. && \
 			make && make install && ldconfig && rm -rf /opt/soft;
+
+# 编译hiredis
+RUN mkdir -pv /opt/soft && cd /opt/soft  && git clone https://github.com/redis/hiredis --depth=1  && cd hiredis  && make -j  && make install  && ldconfig  && mkdir -pv /usr/lib/hiredis  && cp libhiredis.so /usr/lib/hiredis  && mkdir -pv /usr/include/hiredis  && cp hiredis.h /usr/include/hiredis  && rm -rf /opt/soft
+
+#编译 inotify-tools
+RUN mkdir -pv /opt/soft && cd /opt/soft  && wget -nv https://github.com/rvoicilas/inotify-tools/archive/3.20.1.tar.gz  && tar -zxf 3.20.1.tar.gz  && cd inotify-tools-3.20.1  && ./autogen.sh  && ./configure  && make  && make install  && ln -sv /usr/local/lib/libinotify* /usr/lib/  && rm -rf /opt/soft
+
+#编译nghttp2
+RUN mkdir -pv /opt/soft && cd /opt/soft  && wget -nv https://github.com/nghttp2/nghttp2/releases/download/v1.31.0/nghttp2-1.31.0.tar.gz  && tar -zxf nghttp2-1.31.0.tar.gz  && cd nghttp2-1.31.0  && ./configure  && make  && make install  && rm -rf /opt/soft
+
+#编译jemalloc
+RUN mkdir -pv /opt/soft && cd /opt/soft && wget -nv https://github.com/jemalloc/jemalloc/releases/download/4.0.4/jemalloc-4.0.4.tar.bz2 && tar -jxf jemalloc-4.0.4.tar.bz2 && cd jemalloc-4.0.4/ && ./configure --with-jemalloc-prefix=je_ --prefix=/usr/local/jemalloc && make && make install && rm -rf /opt/soft
+
+#安装libsodium
+RUN mkdir -pv /opt/soft && cd /opt/soft && wget -nv https://github.com/jedisct1/libsodium/archive/1.0.16.tar.gz && tar -zxf 1.0.16.tar.gz && cd libsodium-1.0.16  && ./autogen.sh && ./configure && make && make check && make install  && rm -rf /opt/soft
 
 #编译 GO
 ENV GOROOT /usr/local/go
