@@ -15,7 +15,7 @@ RUN mkdir -pv /opt/soft && cd /opt/soft  && wget -nv https://cmake.org/files/v3.
 RUN mkdir -pv /opt/soft && cd /opt/soft && wget -nv https://www.openssl.org/source/openssl-1.0.2l.tar.gz  && tar -zxf openssl-1.0.2l.tar.gz  && cd openssl-1.0.2l  &&  ./config shared --prefix=/usr/local/openssl --openssldir=/usr/lib/openssl   && make  && make install  && rm -rf /opt/soft
 
 #python 插件
-RUN mkdir -pv /opt/soft && cd /opt/soft && wget -nv https://bootstrap.pypa.io/get-pip.py && python -mpip install -U pyopenssl ndg-httpsclient pyasn1 && python -mpip install --upgrade pip && python get-pip.py && python -mpip install -U numpy && python -mpip install -U matplotlib --ignore-installed six && rm -rf /opt/soft;
+RUN mkdir -pv /opt/soft && cd /opt/soft && wget -nv https://bootstrap.pypa.io/get-pip.py && python get-pip.py && python -mpip install -U pyopenssl ndg-httpsclient pyasn1 && python -mpip install --upgrade pip && python get-pip.py && python -mpip install -U numpy && python -mpip install -U matplotlib --ignore-installed six && rm -rf /opt/soft;
 
 #安装 opencv3
 RUN mkdir -pv /opt/soft && wget -nv  https://github.com/opencv/opencv/archive/3.4.1.zip -O opencv-3.4.1.zip && unzip opencv-3.4.1.zip && wget -nv  https://github.com/opencv/opencv_contrib/archive/3.4.1.zip -O opencv_contrib-3.4.1.zip && unzip opencv_contrib-3.4.1.zip && cd  /opt/soft/opencv-3.4.1 && \
