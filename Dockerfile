@@ -30,7 +30,7 @@ RUN mkdir -pv /opt/soft && cd /opt/soft && wget -nv https://github.com/jemalloc/
 RUN mkdir -pv /opt/soft && cd /opt/soft && wget -nv https://github.com/jedisct1/libsodium/archive/1.0.16.tar.gz && tar -zxf 1.0.16.tar.gz && cd libsodium-1.0.16  && ./autogen.sh && ./configure && make && make check && make install  && rm -rf /opt/soft
 
 #python 插件
-RUN mkdir -pv /opt/soft && cd /opt/soft && wget -nv https://bootstrap.pypa.io/get-pip.py && python -mpip install -U pyopenssl ndg-httpsclient pyasn1 && python get-pip.py && python -mpip install -U numpy && python -mpip install -U matplotlib --ignore-installed six && rm -rf /opt/soft;
+RUN mkdir -pv /opt/soft && cd /opt/soft && wget -nv https://bootstrap.pypa.io/get-pip.py && python -mpip install -U pyopenssl ndg-httpsclient pyasn1 && python -mpip install --upgrade pip && python get-pip.py && python -mpip install -U numpy && python -mpip install -U matplotlib --ignore-installed six && rm -rf /opt/soft;
 
 #安装 opencv3
 RUN mkdir -pv /opt/soft && wget -nv  https://github.com/opencv/opencv/archive/3.4.1.zip -O opencv-3.4.1.zip && unzip opencv-3.4.1.zip && wget -nv  https://github.com/opencv/opencv_contrib/archive/3.4.1.zip -O opencv_contrib-3.4.1.zip && unzip opencv_contrib-3.4.1.zip && cd  /opt/soft/opencv-3.4.1 && \
