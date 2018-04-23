@@ -9,7 +9,7 @@ MAINTAINER abulo.hoo@gmail.com
 RUN  sed -i 's/archive.ubuntu.com/mirrors.aliyun.com/' /etc/apt/sources.list && groupadd -r www  && useradd -r -g www www && mkdir -pv /home/www && apt-get -y update  && apt-get install --no-install-recommends -y -q libxml2 libxml2-dev build-essential openssl libssl-dev make curl libjpeg-dev libpng-dev libmcrypt-dev libreadline6 libreadline6-dev libmhash-dev libfreetype6-dev libkrb5-dev libc-client2007e libc-client2007e-dev libbz2-dev libxslt1-dev libxslt1.1 libpq-dev libpng12-dev git autoconf automake m4 libmagickcore-dev libmagickwand-dev libcurl4-openssl-dev libltdl-dev libmhash2 libiconv-hook-dev libiconv-hook1 libpcre3-dev libgmp-dev gcc g++ ssh cmake re2c wget cron bzip2 rcconf flex vim bison mawk cpp binutils libncurses5 unzip tar libncurses5-dev libtool libpcre3 libpcrecpp0 zlibc libltdl3-dev slapd ldap-utils db5.1-util libldap2-dev libsasl2-dev net-tools libicu-dev libtidy-dev systemtap-sdt-dev libgmp3-dev gettext libexpat1-dev libz-dev libedit-dev libdmalloc-dev libevent-dev libyaml-dev autotools-dev pkg-config zlib1g-dev libcunit1-dev libev-dev libjansson-dev libc-ares-dev libjemalloc-dev cython python3-dev python-setuptools libreadline-dev perl python3-pip zsh tcpdump strace gdb openbsd-inetd telnetd htop valgrind python2.7-dev libatlas-base-dev gfortran libjasper-dev libgtk2.0-dev libavcodec-dev libavformat-dev libswscale-dev libtiff-dev libv4l-dev ant default-jdk checkinstall yasm libjpeg8-dev libtiff4-dev libdc1394-22-dev libxine2-dev libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev qt5-default libtbb-dev libfaac-dev libmp3lame-dev libtheora-dev libvorbis-dev libxvidcore-dev libopencore-amrnb-dev libopencore-amrwb-dev x264 v4l-utils libprotobuf-dev protobuf-compiler libgoogle-glog-dev libgflags-dev libgphoto2-dev libeigen3-dev libhdf5-dev doxygen ca-certificates mercurial bzr && apt-get clean  && rm -rf /var/lib/apt/lists/*  && ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/include/gmp.h  && ln -s /usr/lib/x86_64-linux-gnu/libldap.so /usr/lib/  && ln -s /usr/lib/x86_64-linux-gnu/liblber.so /usr/lib/  && ln -s /usr/lib/libiconv_hook.so.1.0.0 /usr/lib/libiconv.so  && ln -s /usr/lib/libiconv_hook.so.1.0.0 /usr/lib/libiconv.so.1;
 
 #编译 Cmake
-RUN mkdir -pv /opt/soft && cd /opt/soft  && wget -nv https://cmake.org/files/v3.6/cmake-3.6.3.tar.gz && tar -xvf cmake-3.6.3.tar.gz && cd cmake-3.6.3 && ./bootstrap && make && make install  && rm -rf /opt/soft
+RUN mkdir -pv /opt/soft && cd /opt/soft  && wget -nv https://cmake.org/files/v3.6/cmake-3.6.3.tar.gz && tar -zxf cmake-3.6.3.tar.gz && cd cmake-3.6.3 && ./bootstrap && make && make install  && rm -rf /opt/soft
 
 # 编译openssl
 RUN mkdir -pv /opt/soft && cd /opt/soft && wget -nv https://www.openssl.org/source/openssl-1.0.2l.tar.gz  && tar -zxf openssl-1.0.2l.tar.gz  && cd openssl-1.0.2l  &&  ./config shared --prefix=/usr/local/openssl --openssldir=/usr/lib/openssl   && make  && make install  && rm -rf /opt/soft
@@ -24,7 +24,7 @@ RUN mkdir -pv /opt/soft && cd /opt/soft  && wget -nv https://github.com/rvoicila
 RUN mkdir -pv /opt/soft && cd /opt/soft  && wget -nv https://github.com/nghttp2/nghttp2/releases/download/v1.31.0/nghttp2-1.31.0.tar.gz  && tar -zxf nghttp2-1.31.0.tar.gz  && cd nghttp2-1.31.0  && ./configure  && make  && make install  && rm -rf /opt/soft
 
 #编译jemalloc
-RUN mkdir -pv /opt/soft && cd /opt/soft && wget -nv https://github.com/jemalloc/jemalloc/releases/download/4.0.4/jemalloc-4.0.4.tar.bz2 && tar -jxvf jemalloc-4.0.4.tar.bz2 && cd jemalloc-4.0.4/ && ./configure --with-jemalloc-prefix=je_ --prefix=/usr/local/jemalloc && make && make install && rm -rf /opt/soft
+RUN mkdir -pv /opt/soft && cd /opt/soft && wget -nv https://github.com/jemalloc/jemalloc/releases/download/4.0.4/jemalloc-4.0.4.tar.bz2 && tar -jxf jemalloc-4.0.4.tar.bz2 && cd jemalloc-4.0.4/ && ./configure --with-jemalloc-prefix=je_ --prefix=/usr/local/jemalloc && make && make install && rm -rf /opt/soft
 
 #安装libsodium
 RUN mkdir -pv /opt/soft && cd /opt/soft && wget -nv https://github.com/jedisct1/libsodium/archive/1.0.16.tar.gz && tar -zxf 1.0.16.tar.gz && cd libsodium-1.0.16  && ./autogen.sh && ./configure && make && make check && make install  && rm -rf /opt/soft
@@ -36,6 +36,7 @@ RUN mkdir -pv /opt/soft && cd /opt/soft; wget -nv https://bootstrap.pypa.io/get-
 RUN mkdir -pv /opt/soft && wget -nv  https://github.com/opencv/opencv/archive/3.4.1.zip -O opencv-3.4.1.zip && unzip opencv-3.4.1.zip && wget -nv  https://github.com/opencv/opencv_contrib/archive/3.4.1.zip -O opencv_contrib-3.4.1.zip && unzip opencv_contrib-3.4.1.zip && cd  /opt/soft/opencv-3.4.1 && \
         rm -rf build && \
         mkdir build && \
+        cd build && \
 		cmake -D CMAKE_BUILD_TYPE=RELEASE \
 			-D BUILD_PYTHON_SUPPORT=ON \
 			-D CMAKE_INSTALL_PREFIX=/usr/local \
