@@ -10,12 +10,10 @@ ARG LDAP_ORG=ldap
 ARG LDAP_HOSTNAME=localhost
 ARG LDAP_PASSWORD=ldap
 
-
-ENV GOROOT /usr/local/go
-ENV GOPATH /data/go
-ENV PATH $GOROOT/bin:$PATH
-ENV PATH $PATH:$GOROOT/bin:$GOPATH/bin
-
+ENV GOROOT /usr/local/go \
+	GOPATH /data/go \
+	PATH $GOROOT/bin:$PATH \
+	PATH $PATH:$GOROOT/bin:$GOPATH/bin
 
 # 设置源
 RUN  sed -i 's/archive.ubuntu.com/mirrors.aliyun.com/' /etc/apt/sources.list && \
@@ -66,7 +64,7 @@ RUN mkdir -pv /opt/soft && \
 	wget -nv https://github.com/jemalloc/jemalloc/releases/download/4.0.4/jemalloc-4.0.4.tar.bz2 &&  tar -jxvf jemalloc-4.0.4.tar.bz2 && cd jemalloc-4.0.4/ && ./configure --with-jemalloc-prefix=je_ --prefix=/usr/local/jemalloc && make && make install && \
 	cd /opt/soft && \
 	echo "编译 libsodium" && \
-	wget -nv https://github.com/jedisct1/libsodium/archive/1.0.16.tar.gz && tar -zxf 1.0.16.tar.gz &&  cd libsodium-1.0.16  && ./autogen.sh && ./configure && make && make check && make install  &&
+	wget -nv https://github.com/jedisct1/libsodium/archive/1.0.16.tar.gz && tar -zxf 1.0.16.tar.gz &&  cd libsodium-1.0.16  && ./autogen.sh && ./configure && make && make check && make install  && \
 	cd /opt/soft && \
 	echo "敏感词过滤" && \
 	wget -nv ftp://linux.thai.net/pub/ThaiLinux/software/libthai/libdatrie-0.2.5.tar.gz && tar -zxf libdatrie-0.2.5.tar.gz && cd  libdatrie-0.2.5 && ./configure  --prefix=/usr/local/libdatrie && make && make install && rm -rf /opt/soft
@@ -135,9 +133,9 @@ RUN mkdir -pv /opt/soft && \
 
 
 #copy 配置文件
-COPY php-fpm.conf  /usr/local/php/etc/
-COPY www.conf  /usr/local/php/etc/php-fpm.d/
-COPY php.ini  /usr/local/php/etc/
+COPY php-fpm.conf  /usr/local/php/etc/ \
+	 www.conf  /usr/local/php/etc/php-fpm.d/ \
+	 php.ini  /usr/local/php/etc/
 
 USER www
 WORKDIR /home/www
