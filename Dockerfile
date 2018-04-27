@@ -48,7 +48,7 @@ RUN mkdir -pv /opt/soft && cd /opt/soft && wget -c -nv https://github.com/rvoici
 RUN mkdir -pv /opt/soft && cd /opt/soft && wget -c -nv https://github.com/nghttp2/nghttp2/releases/download/v1.31.1/nghttp2-1.31.1.tar.gz && tar -zxf nghttp2-1.31.1.tar.gz && cd nghttp2-1.31.1 && ./configure && make && make install && rm -rf /opt/soft
 
 #编译 jemalloc
-RUN mkdir -pv /opt/soft && cd /opt/soft && wget -c -nv https://github.com/jemalloc/jemalloc/releases/download/4.0.4/jemalloc-4.0.4.tar.bz2 && tar -jxvf jemalloc-4.0.4.tar.bz2 && cd jemalloc-4.0.4/ && ./configure --with-jemalloc-prefix=je_ --prefix=/usr/local/jemalloc && make && make install && rm -rf /opt/soft
+RUN mkdir -pv /opt/soft && cd /opt/soft && wget -c -nv https://github.com/jemalloc/jemalloc/releases/download/4.0.4/jemalloc-4.0.4.tar.bz2 && tar -jxf jemalloc-4.0.4.tar.bz2 && cd jemalloc-4.0.4/ && ./configure --with-jemalloc-prefix=je_ --prefix=/usr/local/jemalloc && make && make install && rm -rf /opt/soft
 
 #编译 libsodium
 RUN mkdir -pv /opt/soft && cd /opt/soft && wget -c -nv https://github.com/jedisct1/libsodium/archive/1.0.16.tar.gz && tar -zxf 1.0.16.tar.gz &&  cd libsodium-1.0.16  && ./autogen.sh && ./configure && make && make check && make install  && rm -rf /opt/soft
