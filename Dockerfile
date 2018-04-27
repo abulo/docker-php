@@ -104,9 +104,6 @@ RUN mkdir -pv /opt/soft && \
 	rm -rf /opt/soft
 
 
-
-
-
 #智能截图
 #RUN mkdir -pv /opt/soft && cd /opt/soft && git clone https://github.com/abulo/tclip.git --depth=1 && cd tclip/php_ext && /usr/local/php/bin/phpize && ./configure  --with-php-config=/usr/local/php/bin/php-config  && make && make install && rm -rf /opt/soft
 
@@ -123,9 +120,9 @@ RUN mkdir -pv /opt/soft && \
 
 
 #copy 配置文件
-COPY php-fpm.conf  /usr/local/php/etc/ \
-	 www.conf  /usr/local/php/etc/php-fpm.d/ \
-	 php.ini  /usr/local/php/etc/
+COPY php-fpm.conf  /usr/local/php/etc/
+COPY www.conf  /usr/local/php/etc/php-fpm.d/
+COPY php.ini  /usr/local/php/etc/
 
 USER www
 WORKDIR /home/www
