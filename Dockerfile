@@ -7,7 +7,7 @@ MAINTAINER abulo.hoo@gmail.com
 
 #sed -i 's/mirrors.aliyun.com/archive.ubuntu.com/' /etc/apt/sources.list &&
 
-RUN apt-get -y update && apt-get install --no-install-recommends -y -q  gfortran libjasper-dev libgtk2.0-dev libavcodec-dev libavformat-dev libswscale-dev libtiff-dev libv4l-dev ant default-jdk checkinstall yasm libjpeg8-dev libtiff5-dev libdc1394-22-dev libxine2-dev libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev qt5-default libtbb-dev libfaac-dev libmp3lame-dev libtheora-dev libvorbis-dev libxvidcore-dev libopencore-amrnb-dev libopencore-amrwb-dev x264 v4l-utils libprotobuf-dev protobuf-compiler libgoogle-glog-dev libgflags-dev libgphoto2-dev libeigen3-dev libhdf5-dev doxygen ca-certificates mercurial bzr libffi-dev libtbb2 && apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN apt-get -y update && apt-get install --no-install-recommends -y  gfortran libjasper-dev libgtk2.0-dev libavcodec-dev libavformat-dev libswscale-dev libtiff-dev libv4l-dev ant default-jdk checkinstall yasm libjpeg8-dev libtiff5-dev libdc1394-22-dev libxine2-dev libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev qt5-default libtbb-dev libfaac-dev libmp3lame-dev libtheora-dev libvorbis-dev libxvidcore-dev libopencore-amrnb-dev libopencore-amrwb-dev x264 v4l-utils libprotobuf-dev protobuf-compiler libgoogle-glog-dev libgflags-dev libgphoto2-dev libeigen3-dev libhdf5-dev doxygen ca-certificates mercurial bzr libffi-dev libtbb2 && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 
 ENV GOROOT /usr/local/go
@@ -20,7 +20,7 @@ RUN mkdir -pv /opt/soft && cd /opt/soft && wget -c -nv  --no-check-certificate h
 
 
 #安装 opencv3
-RUN mkdir -pv /opt/soft && cd /opt/soft && wget -c -nv -O opencv.zip https://github.com/opencv/opencv/archive/3.4.1.zip && unzip opencv.zip &&  wget -c -nv  -O opencv_contrib.zip https://github.com/opencv/opencv_contrib/archive/3.4.1.zip && unzip opencv_contrib.zip && cd opencv-3.4.1 && rm -rf build && mkdir build && cd build && \
+RUN mkdir -pv /opt/soft && cd /opt/soft && wget -c -nv -O opencv.tar.gz https://github.com/opencv/opencv/archive/3.4.1.tar.gz && tar -xzf opencv.tar.gz &&  wget -c -nv  -O opencv_contrib.tar.gz https://github.com/opencv/opencv_contrib/archive/3.4.1.tar.gz && tar -xzf opencv_contrib.tar.gz && cd opencv-3.4.1 && rm -rf build && mkdir build && cd build && \
 	cmake \
     -D CMAKE_BUILD_TYPE=RELEASE \
     -D CMAKE_INSTALL_PREFIX=/usr/local \
