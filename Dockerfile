@@ -94,7 +94,6 @@ RUN mkdir -pv /opt/soft && cd /opt/soft && wget -c -nv  https://github.com/abulo
 #智能截图
 RUN mkdir -pv /opt/soft && cd /opt/soft && git clone https://github.com/abulo/tclip.git --depth=1 && cd tclip/php_ext && /usr/local/php/bin/phpize && ./configure  --with-php-config=/usr/local/php/bin/php-config  && make && make install && rm -rf /opt/soft
 
-
 #编译PHP-X
 RUN mkdir -pv /opt/soft && cd /opt/soft && git clone https://github.com/swoole/PHP-X.git && cd PHP-X && cmake . -DPHP_CONFIG_DIR=/usr/local/php/bin && cmake . && make install && rm -rf /opt/soft
 
