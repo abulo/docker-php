@@ -56,8 +56,6 @@ RUN mkdir -pv /opt/soft && cd /opt/soft && wget -c -nv https://github.com/jedisc
 #敏感词过滤
 RUN mkdir -pv /opt/soft && cd /opt/soft && wget -c -nv ftp://linux.thai.net/pub/ThaiLinux/software/libthai/libdatrie-0.2.5.tar.gz && tar -zxf libdatrie-0.2.5.tar.gz && cd  libdatrie-0.2.5 && ./configure  --prefix=/usr/local/libdatrie && make && make install && rm -rf /opt/soft
 
-#安装opencv2.0
-RUN mkdir -pv /opt/soft && cd /opt/soft && wget https://github.com/opencv/opencv/archive/2.4.4.tar.gz && tar -zxf 2.4.4.tar.gz && cd opencv-2.4.4/ && cmake CMakeLists.txt && make && make install && export PKG_CONFIG_PATH=/usr/lib/pkgconfig/:/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH && echo "/usr/local/lib/" > /etc/ld.so.conf.d/opencv.conf  && ldconfig && rm -rf /opt/soft
 
 # 编译 PHP
 RUN mkdir -pv /opt/soft && cd /opt/soft && wget -c -nv  http://cn2.php.net/distributions/php-7.1.16.tar.gz && tar -zxf php-7.1.16.tar.gz &&  cd php-7.1.16 && ./buildconf --force && ./configure --prefix=/usr/local/php --with-config-file-path=/usr/local/php/etc --with-config-file-scan-dir=/usr/local/php/etc/php.d --enable-bcmath --enable-calendar  --enable-exif --enable-ftp --enable-gd-native-ttf --enable-intl --enable-mbregex --enable-mbstring --enable-shmop --enable-soap --enable-sockets --enable-sysvmsg --enable-sysvsem --enable-sysvshm --enable-wddx --enable-dba --enable-zip --with-freetype-dir --with-gd --with-gettext --with-iconv --with-icu-dir=/usr --with-jpeg-dir --with-kerberos --with-libedit --with-mhash --with-openssl  --with-png-dir --with-xmlrpc --with-zlib --with-zlib-dir --with-bz2 --enable-fpm --with-fpm-user=www --with-fpm-group=www --with-gmp --with-curl --with-xsl --with-ldap --with-ldap-sasl=/usr --enable-pcntl --with-tidy --enable-zend-signals --enable-dtrace  --with-mysqli=mysqlnd   --with-pdo-mysql=mysqlnd  --enable-pdo  --enable-opcache --with-mcrypt --enable-gd-jis-conv --with-imap --with-imap-ssl --with-libxml-dir --enable-shared --with-pcre-regex  --with-sqlite3 --with-cdb  --enable-fileinfo --enable-filter --with-pcre-dir  --with-openssl-dir  --enable-json  --enable-mbregex-backtrack  --with-onig  --with-pdo-sqlite --with-readline --enable-session --enable-simplexml   --enable-mysqlnd-compression-support --with-pear && sed -i 's/EXTRA_LIBS.*/& -llber/g' Makefile && make && make install && cp /opt/soft/php-7.1.16/sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm && chmod +x /etc/init.d/php-fpm && rm -rf /opt/soft && ln -s /usr/local/php/bin/* /usr/local/bin/
@@ -90,9 +88,6 @@ RUN mkdir -pv /opt/soft && cd /opt/soft && wget -c -nv  http://pecl.php.net/get/
 #敏感词过滤PHP 扩展
 RUN mkdir -pv /opt/soft && cd /opt/soft && wget -c -nv  https://github.com/abulo/php-ext-trie-filter/archive/v1.0.tar.gz && tar zxvf v1.0.tar.gz  && cd php-ext-trie-filter-1.0  &&  /usr/local/php/bin/phpize &&  ./configure   --with-php-config=/usr/local/php/bin/php-config  --with-trie_filter=/usr/local/libdatrie && make && make install && rm -rf /opt/soft
 
-#智能截图
-RUN mkdir -pv /opt/soft && cd /opt/soft && git clone https://github.com/abulo/tclip.git --depth=1 && cd tclip/php_ext && /usr/local/php/bin/phpize && ./configure  --with-php-config=/usr/local/php/bin/php-config  && make && make install && rm -rf /opt/soft
-
 #编译PHP-X
 RUN mkdir -pv /opt/soft && cd /opt/soft && git clone https://github.com/swoole/PHP-X.git && cd PHP-X && cmake . -DPHP_CONFIG_DIR=/usr/local/php/bin && cmake . && make install && rm -rf /opt/soft
 
@@ -111,9 +106,9 @@ RUN mkdir -pv /opt/soft && cd /opt/soft && wget -c  https://github.com/swoole/sw
 
 
 #copy 配置文件
-COPY php-fpm.conf  /usr/local/php/etc/
-COPY www.conf  /usr/local/php/etc/php-fpm.d/
-COPY php.ini  /usr/local/php/etc/
+#COPY php-fpm.conf  /usr/local/php/etc/
+#COPY www.conf  /usr/local/php/etc/php-fpm.d/
+#COPY php.ini  /usr/local/php/etc/
 
-USER www
-WORKDIR /home/www
+#USER www
+#WORKDIR /home/www
