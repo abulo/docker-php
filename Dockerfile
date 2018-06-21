@@ -45,10 +45,10 @@ RUN mkdir -pv /opt/soft && cd /opt/soft && wget -c -nv https://github.com/redis/
 RUN mkdir -pv /opt/soft && cd /opt/soft && wget -c -nv https://github.com/rvoicilas/inotify-tools/archive/3.20.1.tar.gz && tar -zxf 3.20.1.tar.gz && cd inotify-tools-3.20.1 && ./autogen.sh && ./configure && make && make install && ln -sv /usr/local/lib/libinotify* /usr/lib/ &&  rm -rf /opt/soft
 
 #编译 nghttp2
-RUN mkdir -pv /opt/soft && cd /opt/soft && wget -c -nv https://github.com/nghttp2/nghttp2/releases/download/v1.31.1/nghttp2-1.31.1.tar.gz && tar -zxf nghttp2-1.31.1.tar.gz && cd nghttp2-1.31.1 && ./configure && make && make install && ldconfig && rm -rf /opt/soft
+RUN mkdir -pv /opt/soft && cd /opt/soft && wget -c -nv https://github.com/nghttp2/nghttp2/releases/download/v1.32.0/nghttp2-1.32.0.tar.gz && tar -zxf nghttp2-1.32.0.tar.gz && cd nghttp2-1.32.0 && ./configure && make && make install && ldconfig && rm -rf /opt/soft
 
 #编译 jemalloc
-RUN mkdir -pv /opt/soft && cd /opt/soft && wget -c -nv https://github.com/jemalloc/jemalloc/releases/download/4.0.4/jemalloc-4.0.4.tar.bz2 && tar -jxf jemalloc-4.0.4.tar.bz2 && cd jemalloc-4.0.4/ && ./configure --with-jemalloc-prefix=je_ --prefix=/usr/local/jemalloc && make && make install && rm -rf /opt/soft
+RUN mkdir -pv /opt/soft && cd /opt/soft && wget -c -nv https://github.com/jemalloc/jemalloc/releases/download/5.1.0/jemalloc-5.1.0.tar.bz2 && tar -jxf jemalloc-5.1.0.tar.bz2 && cd jemalloc-5.1.0/ && ./configure --with-jemalloc-prefix=je_ --prefix=/usr/local/jemalloc && make && make install && rm -rf /opt/soft
 
 #编译 libsodium
 RUN mkdir -pv /opt/soft && cd /opt/soft && wget -c -nv https://github.com/jedisct1/libsodium/archive/1.0.16.tar.gz && tar -zxf 1.0.16.tar.gz &&  cd libsodium-1.0.16  && ./autogen.sh && ./configure && make && make check && make install  && rm -rf /opt/soft
@@ -83,7 +83,7 @@ RUN mkdir -pv /opt/soft && cd /opt/soft && wget -c -nv  http://pecl.php.net/get/
 RUN mkdir -pv /opt/soft && cd /opt/soft && wget -c -nv  http://pecl.php.net/get/inotify-2.0.0.tgz  && tar -zxf  inotify-2.0.0.tgz  && cd inotify-2.0.0 && /usr/local/php/bin/phpize && ./configure  --with-php-config=/usr/local/php/bin/php-config  && make && make install && rm -rf /opt/soft
 
 #编译 mongodb 插件
-RUN mkdir -pv /opt/soft && cd /opt/soft && wget -c -nv  http://pecl.php.net/get/mongodb-1.4.3.tgz && tar -zxf mongodb-1.4.3.tgz && cd mongodb-1.4.3 && /usr/local/php/bin/phpize && ./configure  --with-php-config=/usr/local/php/bin/php-config  && make && make install && rm -rf /opt/soft
+RUN mkdir -pv /opt/soft && cd /opt/soft && wget -c -nv  http://pecl.php.net/get/mongodb-1.4.4.tgz && tar -zxf mongodb-1.4.4.tgz && cd mongodb-1.4.4 && /usr/local/php/bin/phpize && ./configure  --with-php-config=/usr/local/php/bin/php-config  && make && make install && rm -rf /opt/soft
 
 #敏感词过滤PHP 扩展
 RUN mkdir -pv /opt/soft && cd /opt/soft && wget -c -nv  https://github.com/abulo/php-ext-trie-filter/archive/v1.0.tar.gz && tar zxvf v1.0.tar.gz  && cd php-ext-trie-filter-1.0  &&  /usr/local/php/bin/phpize &&  ./configure   --with-php-config=/usr/local/php/bin/php-config  --with-trie_filter=/usr/local/libdatrie && make && make install && rm -rf /opt/soft
@@ -91,32 +91,7 @@ RUN mkdir -pv /opt/soft && cd /opt/soft && wget -c -nv  https://github.com/abulo
 #编译PHP-X
 RUN mkdir -pv /opt/soft && cd /opt/soft && git clone https://github.com/swoole/PHP-X.git && cd PHP-X && cmake . -DPHP_CONFIG_DIR=/usr/local/php/bin && cmake . && make install && rm -rf /opt/soft
 
-#编译swoole
-#RUN mkdir -pv /opt/soft && cd /opt/soft && wget -c  https://github.com/swoole/swoole-src/archive/v2.1.1.tar.gz && tar -zxf v2.1.1.tar.gz  && cd swoole-src-2.1.1  &&  sed -i '970c char *buf = (char*) sw_malloc(buf_len);' src/core/base.c  &&  sed -i '975c void *tmp = sw_realloc(buf, buf_len);' src/core/base.c &&  /usr/local/php/bin/phpize && ./configure       --enable-swoole-debug --enable-sockets --enable-openssl --with-openssl-dir=/usr/local/openssl --enable-http2 --enable-async-redis --enable-swoole  --enable-coroutine --enable-timewheel --enable-mysqlnd --with-jemalloc-dir=/usr/local/jemalloc  --with-php-config=/usr/local/php/bin/php-config  && make && make install && rm -rf /opt/soft
-
-#RUN  apt-get -y update && apt-get install --no-install-recommends -y -q postgresql-client postgresql postgresql-contrib libpq-dev  && apt-get clean && rm -rf /var/lib/apt/lists/* 
-
+#编译 swoole
 RUN mkdir -pv /opt/soft && cd /opt/soft && wget -c  https://github.com/swoole/swoole-src/archive/v4.0.0.tar.gz && tar -zxf v4.0.0.tar.gz  && cd swoole-src-4.0.0  &&  /usr/local/php/bin/phpize && ./configure --enable-swoole-debug --enable-trace-log --enable-sockets --enable-async-redis --enable-openssl --enable-http2   --enable-swoole  --with-swoole --with-openssl-dir=/usr/local/openssl --with-jemalloc-dir=/usr/local/jemalloc --with-phpx-dir=/usr/local/include --enable-mysqlnd --enable-coroutine --enable-debug   --enable-coroutine-postgresql --with-php-config=/usr/local/php/bin/php-config  && make && make install  && rm -rf /opt/soft   
 
 
-#RUN mkdir -pv /opt/soft && cd /opt/soft && wget -c  https://github.com/swoole/swoole-src/archive/v4.0.0.tar.gz && tar -zxf v4.0.0.tar.gz  && cd swoole-src-4.0.0  &&  /usr/local/php/bin/phpize && ./configure --enable-swoole-debug --enable-trace-log --enable-sockets --enable-async-redis --enable-openssl --enable-http2 --enable-swoole --with-openssl-dir=/usr/local/openssl --enable-coroutine --enable-mysqlnd --with-jemalloc-dir=/usr/local/jemalloc  --with-php-config=/usr/local/php/bin/php-config  && make && make install && rm -rf /opt/soft
-
-
-#--enable-coroutine-postgresql --with-libpq-dir=/usr/include
-#编译 PHP-X
-#RUN mkdir -pv /opt/soft && cd /opt/soft && git clone https://github.com/swoole/PHP-X.git && cd PHP-X && cmake . -DPHP_CONFIG_DIR=/usr/local/php/bin && cmake . && make install &&  rm -rf /opt/soft
-
-#编译swoole
-#RUN mkdir -pv /opt/soft && cd /opt/soft && wget -c  https://github.com/swoole/swoole-src/archive/v2.1.1.tar.gz && tar -zxf v2.1.1.tar.gz  && cd swoole-src-2.1.1  &&  sed -i '970c char *buf = (char*) sw_malloc(buf_len);' src/core/base.c  &&  sed -i '975c void *tmp = sw_realloc(buf, buf_len);' src/core/base.c &&  /usr/local/php/bin/phpize && ./configure       --enable-swoole-debug --enable-sockets --enable-openssl --with-openssl-dir=/usr/local/openssl --enable-http2 --enable-async-redis --enable-swoole  --enable-coroutine --enable-timewheel --enable-mysqlnd --with-jemalloc-dir=/usr/local/jemalloc  --with-php-config=/usr/local/php/bin/php-config  && make && make install && rm -rf /opt/soft
-
-
-#RUN mkdir -pv /opt/soft && cd /opt/soft && wget -c  https://github.com/swoole/swoole-src/archive/v4.0.0.tar.gz && tar -zxf v4.0.0.tar.gz  && cd swoole-src-4.0.0  &&  /usr/local/php/bin/phpize && ./configure  --enable-swoole-debug --enable-sockets --enable-openssl --with-openssl-dir=/usr/local/openssl --enable-http2 --enable-async-redis --enable-swoole  --enable-coroutine --enable-timewheel --enable-mysqlnd --with-jemalloc-dir=/usr/local/jemalloc --enable-coroutine-postgresql --with-php-config=/usr/local/php/bin/php-config  && make && make install && rm -rf /opt/soft
-
-
-#copy 配置文件
-#COPY php-fpm.conf  /usr/local/php/etc/
-#COPY www.conf  /usr/local/php/etc/php-fpm.d/
-#COPY php.ini  /usr/local/php/etc/
-
-#USER www
-#WORKDIR /home/www
