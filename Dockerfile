@@ -45,7 +45,7 @@ RUN mkdir -pv /opt/soft && cd /opt/soft && git clone https://github.com/abulo/tc
 RUN mkdir -pv /opt/soft && cd /opt/soft && git clone https://github.com/jonnywang/phpjieba.git --depth=1 &&  cd phpjieba/cjieba && make && cd .. && /usr/local/php/bin/phpize && ./configure  --with-php-config=/usr/local/php/bin/php-config  && make && make install && rm -rf /opt/soft
 
 #编译 swoole
-RUN mkdir -pv /opt/soft && cd /opt/soft && wget -c  https://github.com/swoole/swoole-src/archive/v4.2.8.tar.gz && tar -zxf v4.2.8.tar.gz  && cd swoole-src-4.2.8  &&  /usr/local/php/bin/phpize && ./configure --enable-debug-log --enable-trace-log --enable-sockets --enable-openssl --enable-http2 --enable-swoole  --enable-mysqlnd --enable-coroutine-postgresql --with-openssl-dir=/usr/local/openssl  --with-jemalloc-dir=/usr/local/jemalloc  --enable-debug --with-nghttp2-dir=/usr/local/include/nghttp2  --with-php-config=/usr/local/php/bin/php-config && make && make install && rm -rf /opt/soft
+RUN mkdir -pv /opt/soft && cd /opt/soft && wget -c  https://github.com/swoole/swoole-src/archive/v4.2.9.tar.gz && tar -zxf v4.2.9.tar.gz  && cd swoole-src-4.2.9  &&  /usr/local/php/bin/phpize && ./configure --enable-debug-log --enable-trace-log --enable-sockets --enable-openssl --enable-http2 --enable-swoole  --enable-mysqlnd --enable-coroutine-postgresql --with-openssl-dir=/usr/local/openssl  --with-jemalloc-dir=/usr/local/jemalloc  --enable-debug --with-nghttp2-dir=/usr/local/include/nghttp2  --with-php-config=/usr/local/php/bin/php-config && make && make install && rm -rf /opt/soft
 
 
 #copy 配置文件
