@@ -48,7 +48,7 @@ RUN mkdir -pv /opt/soft && cd /opt/soft && git clone https://github.com/abulo/tc
 RUN mkdir -pv /opt/soft && cd /opt/soft && wget -c  https://github.com/swoole/swoole-src/archive/v4.2.13.tar.gz && tar -zxf v4.2.13.tar.gz  && cd swoole-src-4.2.13  &&  /usr/local/php/bin/phpize && ./configure  --enable-sockets  --enable-openssl  --with-openssl-dir=/usr/local/openssl    --enable-http2  --with-nghttp2-dir=/usr/local/include/nghttp2   --enable-mysqlnd   --enable-coroutine-postgresql  --enable-debug-log  --enable-trace-log   --with-php-config=/usr/local/php/bin/php-config && make && make install && rm -rf /opt/soft
 
 #编译swoole_async
-RUN mkdir -pv /opt/soft && cd /opt/soft && git clone https://github.com/swoole/async-ext.git --depth=1 &&  cd async-ext && make && cd .. && /usr/local/php/bin/phpize && ./configure  --with-php-config=/usr/local/php/bin/php-config  && make && make install && rm -rf /opt/soft
+RUN mkdir -pv /opt/soft && cd /opt/soft && git clone https://github.com/swoole/async-ext.git --depth=1 &&  cd async-ext &&  /usr/local/php/bin/phpize && ./configure  --with-php-config=/usr/local/php/bin/php-config  && make && make install && rm -rf /opt/soft
 
 
 #copy 配置文件
