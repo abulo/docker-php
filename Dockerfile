@@ -48,7 +48,6 @@ RUN mkdir -pv /opt/soft && cd /opt/soft && git clone https://github.com/jedisct1
 #编译swoole_async
 && mkdir -pv /opt/soft && cd /opt/soft && git clone https://github.com/swoole/async-ext.git --depth=1 && wget -c https://github.com/swoole/swoole-src/archive/v4.3.3.tar.gz && tar -zxf v4.3.3.tar.gz &&  cd async-ext  && mv ../swoole-src-4.3.3/thirdparty . &&  /usr/local/php/bin/phpize && ./configure  --with-php-config=/usr/local/php/bin/php-config  --enable-swoole_async && make && make install && rm -rf /opt/soft && rm -rf  /var/tmp/* /tmp/*
 
-
 #copy 配置文件
 COPY php-fpm.conf  /usr/local/php/etc/
 COPY www.conf  /usr/local/php/etc/php-fpm.d/
