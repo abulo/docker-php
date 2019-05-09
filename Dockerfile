@@ -43,10 +43,10 @@ RUN mkdir -pv /opt/soft && cd /opt/soft && git clone https://github.com/jedisct1
 && mkdir -pv /opt/soft && cd /opt/soft && git clone https://github.com/jonnywang/phpjieba.git --depth=1 &&  cd phpjieba/cjieba && make && cd .. && /usr/local/php/bin/phpize && ./configure  --with-php-config=/usr/local/php/bin/php-config  && make && make install && rm -rf /opt/soft \
 \
 #编译 swoole
-&& mkdir -pv /opt/soft && cd /opt/soft && wget -c  https://github.com/swoole/swoole-src/archive/v4.3.1.tar.gz && tar -zxf v4.3.1.tar.gz  && cd swoole-src-4.3.1  &&  /usr/local/php/bin/phpize && ./configure  --enable-openssl  --with-openssl-dir=/usr/local/openssl    --enable-http2   --enable-mysqlnd   --enable-coroutine-postgresql --enable-sockets  --enable-debug-log  --enable-trace-log   --with-php-config=/usr/local/php/bin/php-config && make && make install && rm -rf /opt/soft \
+&& mkdir -pv /opt/soft && cd /opt/soft && wget -c  https://github.com/swoole/swoole-src/archive/v4.3.3.tar.gz && tar -zxf v4.3.3.tar.gz  && cd swoole-src-4.3.3  &&  /usr/local/php/bin/phpize && ./configure  --enable-openssl  --with-openssl-dir=/usr/local/openssl    --enable-http2   --enable-mysqlnd   --enable-coroutine-postgresql --enable-sockets  --enable-debug-log  --enable-trace-log   --with-php-config=/usr/local/php/bin/php-config && make && make install && rm -rf /opt/soft \
 \
 #编译swoole_async
-&& mkdir -pv /opt/soft && cd /opt/soft && git clone https://github.com/swoole/async-ext.git --depth=1 && wget -c https://github.com/swoole/swoole-src/archive/v4.3.1.tar.gz && tar -zxf v4.3.1.tar.gz &&  cd async-ext  && mv ../swoole-src-4.3.1/thirdparty . &&  /usr/local/php/bin/phpize && ./configure  --with-php-config=/usr/local/php/bin/php-config  --enable-swoole_async && make && make install && rm -rf /opt/soft && rm -rf  /var/tmp/* /tmp/*
+&& mkdir -pv /opt/soft && cd /opt/soft && git clone https://github.com/swoole/async-ext.git --depth=1 && wget -c https://github.com/swoole/swoole-src/archive/v4.3.3.tar.gz && tar -zxf v4.3.3.tar.gz &&  cd async-ext  && mv ../swoole-src-4.3.3/thirdparty . &&  /usr/local/php/bin/phpize && ./configure  --with-php-config=/usr/local/php/bin/php-config  --enable-swoole_async && make && make install && rm -rf /opt/soft && rm -rf  /var/tmp/* /tmp/*
 
 
 #copy 配置文件
